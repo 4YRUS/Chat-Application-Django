@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% block title %} WORK | {% endblock %}
+
+{% block content %}
+<center>
+	<h1>{{room.name}}</h1>
+	<h6 class='room-slug' style="display: none;">{{room.slug}}</h6>
+	<h6 class='room-name' style="display: none;">{{room.name}}</h6>
+	<h6 class='username' style="display: none;">{{username}}</h6>
+
+
+<script type="text/javascript">
+	container=document.querySelector('.message-content')
+
+	$(document).ready(function(){
+		setInterval(function(){
+			$.ajax({
+				type: 'GET',
+				url : '/getmessages/{{room.slug}}/',
+				success: function(response){
+					container.innerHTML=''
+					console.log(response)
+					for (var item in response.all_messages){
+						container.innerHTML+=`<div class='message-content' style="width: 100%;  display: block ; text-align: left; border-radius: 5px; border: 2px solid lightblue; margin-bottom: 5px; padding: 5px; ">
+						<h5>`+response.all_messages[item].username+`: </h5>
+						<p style="margin: 2px">`+response.all_messages[item].value+`</p>
+					</div>`
+					
+					}
+
+				}
+
+			})
+		},1000)
+
+	})
+</script>
+
+
+	<div class='container' style=" height:calc(100vh - 46.75px - 56px - 40px); width: 50vw; ">
+		<div class='messages' style="width: 100%;  height: calc(100% - 37.6px); padding: 10px; overflow: auto;">
+
+			<!-- <div class='message-content' style="width: 100%;  display: block ; text-align: left; border-radius: 5px; border: 2px solid lightblue; margin-bottom: 5px; padding: 5px; ">
+				<h5>Username: </h5>
+				<p style="margin: 2px">Hello this is me i want to chat here </p>
+			</div> -->
+		{% for message in all_messages %}
+		
+			<div class='message-content' style="width: 100%;  display: block ; text-align: left; border-radius: 5px; border: 2px solid lightblue; margin-bottom: 5px; padding: 5px; ">
+				<h5>{{message.username}}: </h5>
+				<p style="margin: 2px">{{message.value}}</p>
+			</div>
+		
+		{% endfor %}
+			
+			
+		</div>
+		<div clss='message'>
+			<form class='post-form' action="." style="display: flex;">
+				{% csrf_token %}
+				<input type="text" name="content" placeholder="Enter Your message here....", id='message' style="width: calc(100% - 59.24px); border: 2px solid lightblue;  border-radius: 5px;">
+				<button type="submit" class="btn btn-primary">send</button>
+			</form>
+		</div>
+	</div>
+</center>
+{% endblock %}
+
+
+{% block scripts %}
+
+<script type="text/javascript">
+
+	form=document.querySelector('.post-form')
+	room_slug=document.querySelector('.room-slug').innerText
+	container=document.querySelector('.messages')
+	user_message=document.querySelector('#message')
+	form.addEventListener('submit',function1)
+
+
+
+	function function1(e){
+		e.preventDefault()
+		$.ajax({
+			type: "POST",
+			url : '/send',
+			data: {
+				username: document.querySelector('.username').innerText,
+				room_slug: document.querySelector('.room-slug').innerText,
+				room_name:document.querySelector('.room-name').innerText,
+				message: user_message.value,
+				csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken').val(),
+			},
+			success: function(data){
+				
+			}
+
+		
+		})
+
+			container.innerHTML+=`<div class='message-content' style="width: 100%;  display: block ; text-align: left; border-radius: 5px; border: 2px solid lightblue; margin-bottom: 5px; padding: 5px; ">
+				<h5>${document.querySelector('.username').innerText}: </h5>
+				<p style="margin: 2px">${user_message.value} </p>
+			</div>`
+		user_message.value=''
+		
+		
+	}
+	
+</script>
+{% endblock %}

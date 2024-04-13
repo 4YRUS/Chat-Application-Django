@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+{% if user.is_authenticated %}
+{% else %}
+<div style="height: 50vh; width: 50vw; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);">
+	<form method="POST">
+		{% csrf_token %}
+		  <div class="mb-3">
+		    <label for="exampleInputPassword1" class="form-label"><strong>Username</strong></label>
+		    <input type="text" class="form-control" name='username' id="exampleInputEmail1" aria-describedby="emailHelp">
+		  </div>
+		  <div class="mb-3">
+		    <label for="exampleInputPassword1" class="form-label"><strong>Password</strong></label>
+		    <input type="Password" class="form-control" name='password' id="exampleInputPassword1">
+		  </div>
+		  
+		  <button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+</div>
+{% endif %}
+
+{% endblock %}

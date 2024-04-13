@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form class='form-submti' style="position: absolute; top: 50%; left:50%; transform: translate(-50%,-50%); width:50vw; height: 50vh;" >
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label"><strong>Room Slug :</strong></label>
+    <input type="text" class="form-control room-slug"  aria-describedby="emailHelp">
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label"><strong>Room Name : </strong></label>
+    <input type="text" class="form-control room-name" id="exampleInputPassword1">
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label"><strong>Username : </strong></label>
+    <input type="text" class="form-control room-username" id="exampleInputPassword1">
+  </div>
+  <center><a href='#'  class="btn btn-primary submit-button">Submit</a>	</center>
+</form>
+
+<script type="text/javascript">
+	let slug=document.querySelector('.room-slug')
+	let username=document.querySelector('.room-username')
+	let room=document.querySelector('.room-name')
+	let button=document.querySelector('.submit-button')
+
+	button.addEventListener('click',(e)=>{
+		button.href=`work/${slug.value}/${room.value}/${username.value}`
+		button.click()
+	})
+
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %} Sign up | {% endblock %}
+
+{% block content %}
+
+<form method="POST">
+	{% csrf_token %}
+	<div style="width: 50vw; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);">
+		<label style="margin-bottom: 10px; margin-top: 10px; "><strong>Username <br></strong></label><input type="text" name="username" class='form-control'>
+		<label style="margin-bottom: 10px; margin-top: 10px;"><strong>New Password <br></strong></label><input type="text" name="password1" class='form-control'>
+		<label style="margin-bottom: 10px; margin-top: 10px;"><strong>Retype Password <br></strong></label><input type="text" name="password2" class='form-control'>
+		<button type="submit" class="btn btn-primary" style="margin-top: 10px;"> Submit </button>
+
+	</div>
+	<br>
+</form>
+
+{% endblock %}
